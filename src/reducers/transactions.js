@@ -8,6 +8,8 @@ export default function transactions(state = initialState, action) {
       return { ...state, isLoading: action.transactionsIsLoading }
     case 'TRANSACTIONS_FETCH_DATA_SUCCESS':
       return { ...state, transactions: action.transactions }
+    case 'TRANSACTION_ADDING_SUCCESS':
+      return { ...state, transactionAddingSuccess: action.transactionAddingSuccess }
     case 'TRANSACTION_REMOVE_SUCCESS':
       return {
         ...state,

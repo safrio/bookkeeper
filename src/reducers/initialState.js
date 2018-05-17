@@ -6,4 +6,6 @@ export default {
   transactions: [],
   transactionsIsLoading: false,
   transactionsHasErrored: false,
+  transactionAddingSuccess: false,
+
 }

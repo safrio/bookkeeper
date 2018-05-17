@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-// import { transactionsFetchData } from '../../actions/transactions';
-
 class TransactionsList extends Component {
   constructor(props) {
     super(props)
@@ -27,17 +25,20 @@ class TransactionsList extends Component {
     }
 
     return (
-      <ul>
-        {this.props.data.transactions.map((item) => (
-          <li key={item.id}>
-            {item.sum}
-            {item.direction}
-            <Link to={'/transactions/' + item.id + '/edit'}>Edit</Link>
-            <div
-              onClick={() => this.props.data.remove(item.id)}>Remove</div>
-          </li>
-        ))}
-      </ul>
+      <div>
+        <Link to={'/transactions/add'}>Add</Link>
+        <ul>
+          {this.props.data.transactions.map((item) => (
+            <li key={item.id}>
+              {item.sum}
+              {item.direction}
+              <Link to={'/transactions/' + item.id + '/edit'}>Edit</Link>
+              <div
+                onClick={() => this.props.data.remove(item.id)}>Remove</div>
+            </li>
+          ))}
+        </ul>
+      </div>
     );
   }
 }

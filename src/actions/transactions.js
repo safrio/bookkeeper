@@ -46,6 +46,29 @@ export function transactionRemoveErrored(bool) {
   };
 }
 
+// Removing
+
+export function transactionIsAdding(bool) {
+  return {
+    type: 'TRANSACTION_IS_ADDING',
+    transactionIsAdding: bool
+  };
+}
+
+export function transactionAddingSuccess(bool) {
+  return {
+    type: 'TRANSACTION_ADDING_SUCCESS',
+    transactionAddingSuccess: bool
+  };
+}
+
+export function transactionAddingErrored(bool) {
+  return {
+    type: 'TRANSACTION_ADDING_ERROR',
+    transactionAddingErrored: bool
+  };
+}
+
 // ---
 
 export function transactionsFetchData() {
@@ -81,7 +104,35 @@ export function transactionsRemove(id) {
         return response;
       })
       .then((response) => response.json())
-      .then((response) => dispatch(transactionRemoveSuccess(id)))
+      .then((response) => dispatch(transactionRemoveSuccess(true)))
       .catch(() => dispatch(transactionRemoveErrored(true)));
+  };
+}
+
+export function transactionsAdd(data) {
+  return (dispatch) => {
+    dispatch(transactionIsAdding(true));
+    fetch(config.transactionsURL, {
+    	method: 'post',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        "category_id": 5,
+        "direction": 1,
+        "published_at": '2018-05-17',
+        "sum": 3,
+      })
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+
+        dispatch(transactionIsAdding(false));
+
+        return response;
+      })
+      .then((response) => response.json())
+      .then((response) => dispatch(transactionAddingSuccess(true)))
+      .catch(() => dispatch(transactionAddingErrored(true)));
   };
 }

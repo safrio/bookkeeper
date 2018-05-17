@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
   transactionsFetchData,
-  transactionsRemove
+  transactionsRemove,
+  transactionsAdd
 } from '../../actions/transactions';
 
 import { Route, Switch } from 'react-router-dom';
 
 import TransactionsList from './list';
+import TransactionsAdd from './add';
 
 class Transactions extends Component {
   constructor(props, context) {
@@ -21,6 +23,8 @@ class Transactions extends Component {
         <Switch>
           <Route exact path='/'
             render={() => <TransactionsList data={this.props} />} />
+          <Route exact path='/transactions/add'
+            render={() => <TransactionsAdd data={this.props} />} />
         </Switch>
       </ul>
     );
@@ -30,16 +34,19 @@ class Transactions extends Component {
 Transactions.propTypes = {
   fetchData: PropTypes.func.isRequired,
   remove: PropTypes.func.isRequired,
+  add: PropTypes.func.isRequired,
   transactions: PropTypes.array.isRequired,
   hasErrored: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired
+  isLoading: PropTypes.bool.isRequired,
+  addingSuccess: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state, p) => {
+const mapStateToProps = (state) => {
   return {
     transactions: state.transactions.transactions,
     hasErrored: state.transactions.transactionsHasErrored,
     isLoading: state.transactions.transactionsIsLoading,
+    addingSuccess: state.transactions.transactionAddingSuccess,
   };
 };
 
@@ -47,6 +54,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchData: () => dispatch(transactionsFetchData()),
     remove: (id) => dispatch(transactionsRemove(id)),
+    add: (data) => dispatch(transactionsAdd(data)),
   };
 };
 
