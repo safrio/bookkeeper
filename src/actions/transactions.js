@@ -24,8 +24,7 @@ export function transactionsFetchDataSuccess(transactions) {
 export function transactionsFetchData() {
   return (dispatch) => {
     dispatch(transactionsIsLoading(true));
-
-    fetch("${config.fetch_transactions_url}?from=2011-11-11&to=2022-11-11")
+    fetch(config.fetch_transactions_url + "?from=2011-11-11&to=2022-11-11")
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText);

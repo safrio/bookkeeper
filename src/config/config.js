@@ -1,3 +1,5 @@
-export default config = {
+const config = {
 	fetch_transactions_url: 'http://localhost:3000/api/v1/transactions',
 }
+
+export default config;
