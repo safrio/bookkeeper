@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { transactionsFetchData } from '../../actions/transactions';
+import {
+  transactionsFetchData,
+  transactionsRemove
+} from '../../actions/transactions';
 
 import { Route, Switch } from 'react-router-dom';
 
@@ -26,22 +29,24 @@ class Transactions extends Component {
 
 Transactions.propTypes = {
   fetchData: PropTypes.func.isRequired,
+  remove: PropTypes.func.isRequired,
   transactions: PropTypes.array.isRequired,
-  transactionsHasErrored: PropTypes.bool.isRequired,
-  transactionsIsLoading: PropTypes.bool.isRequired
+  hasErrored: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state, p) => {
   return {
-    transactions: state.transactions,
-    transactionsHasErrored: state.transactionsHasErrored,
-    transactionsIsLoading: state.transactionsIsLoading,
+    transactions: state.transactions.transactions,
+    hasErrored: state.transactions.transactionsHasErrored,
+    isLoading: state.transactions.transactionsIsLoading,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchData: () => dispatch(transactionsFetchData()),
+    remove: (id) => dispatch(transactionsRemove(id)),
   };
 };
 

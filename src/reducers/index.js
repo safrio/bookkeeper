@@ -1,9 +1,7 @@
 import { combineReducers } from 'redux';
 
-import { transactions, transactionsHasErrored, transactionsIsLoading } from './transactions';
+import transactions from './transactions';
 
 export default combineReducers({
   transactions,
-  transactionsHasErrored,
-  transactionsIsLoading
 });

@@ -18,11 +18,11 @@ class TransactionsList extends Component {
   }
 
   render() {
-    if (this.props.data.transactionsHasErrored) {
+    if (this.props.data.transactions.hasErrored) {
       return <p>Sorry! There was an error loading the items</p>;
     }
 
-    if (this.props.data.transactionsIsLoading) {
+    if (this.props.data.transactions.isLoading) {
       return <p>Loading…</p>;
     }
 
@@ -33,7 +33,8 @@ class TransactionsList extends Component {
             {item.sum}
             {item.direction}
             <Link to={'/transactions/' + item.id + '/edit'}>Edit</Link>
-            <Link to={'/transactions/' + item.id + '/remove'}>Remove</Link>
+            <div
+              onClick={() => this.props.data.remove(item.id)}>Remove</div>
           </li>
         ))}
       </ul>
