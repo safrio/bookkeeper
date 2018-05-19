@@ -1,11 +1,7 @@
-import moment from 'moment';
-
 export default {
-	currentData: moment().format("DD-MM-YYYY"),
-
+	date: new Date(),
   transactions: [],
   transactionsIsLoading: false,
   transactionsHasErrored: false,
   transactionAddingSuccess: false,
-
 }

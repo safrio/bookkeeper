@@ -2,6 +2,8 @@ import initialState from './initialState'
 
 export default function transactions(state = initialState, action) {
   switch(action.type) {
+    case 'DATE_HAS_CHANGED':
+      return { ...state, date: action.date }
     case 'TRANSACTIONS_HAS_ERRORED':
       return { ...state, hasErrored: action.transactionsHasErrored }
     case 'TRANSACTIONS_IS_LOADING':

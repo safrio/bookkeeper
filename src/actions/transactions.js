@@ -1,4 +1,5 @@
 import config from '../config/config'
+import moment from 'moment'
 
 // Fetching
 
@@ -71,10 +72,10 @@ export function transactionAddingErrored(bool) {
 
 // ---
 
-export function transactionsFetchData() {
+export function transactionsFetchData(date) {
   return (dispatch) => {
     dispatch(transactionsIsLoading(true));
-    fetch(config.transactionsURL + "?from=2011-11-11&to=2022-11-11")
+    fetch(config.transactionsURL + "?date=" + moment(date).format('DD-MM-YYYY'))
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText);

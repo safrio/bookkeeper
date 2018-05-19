@@ -5,7 +5,7 @@ import configureStore from './store/configureStore';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Transactions from './components/transactions/'
-import Panel from './components/panel'
+import Panel from './components/panel/'
 
 import './index.css';
 
@@ -15,7 +15,7 @@ render(
   <Provider store={store}>
     <Router>
       <div>
-        <Route path='/' component={Panel} />
+        <Route path='/' render={() => <Panel />} />
 	      <Switch>
 	        <Route exact path='/' component={Transactions} />
 	        <Route path='/transactions' component={Transactions} />

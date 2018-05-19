@@ -47,12 +47,13 @@ const mapStateToProps = (state) => {
     hasErrored: state.transactions.transactionsHasErrored,
     isLoading: state.transactions.transactionsIsLoading,
     addingSuccess: state.transactions.transactionAddingSuccess,
+    date: state.transactions.date,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchData: () => dispatch(transactionsFetchData()),
+    fetchData: (date) => dispatch(transactionsFetchData(date)),
     remove: (id) => dispatch(transactionsRemove(id)),
     add: (data) => dispatch(transactionsAdd(data)),
   };

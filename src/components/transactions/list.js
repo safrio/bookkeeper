@@ -7,12 +7,13 @@ class TransactionsList extends Component {
   }
 
   componentDidMount() {
-    this.props.data.fetchData();
+    this.props.data.fetchData(this.props.data.date);
   }
 
-  componentWillMount() {
-    const props = this.props;
-    console.log('transactions-list props:', props)
+  componentWillReceiveProps(props) {
+    if (this.props.data.date != props.data.date) {
+      this.props.data.fetchData(props.data.date);
+    }
   }
 
   render() {
