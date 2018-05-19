@@ -8,7 +8,6 @@ import { dateHasChanged } from '../../actions/panel';
 class Panel extends Component {
   constructor(props) {
     super(props)
-    console.log('panel component', props)
   }
 
   render() {
