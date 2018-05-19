@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -16,14 +17,17 @@ class TransactionsAdd extends Component {
   	console.log('add mounted', props)
 
     this.state = {
-      direction: 2,
+      direction: 1,
       category: 3,
       amount: 0,
       addingSuccess: false,
+      time: moment().format('HH:mm'),
+      date: this.props.data.date,
     }
   }
 
   componentWillReceiveProps(props) {
+    this.setState({ date: props.data.date })
     this.setState({ addingSuccess: props.data.addingSuccess })
   }
 
@@ -39,7 +43,7 @@ class TransactionsAdd extends Component {
 
   render() {
     return(
-      <form autoComplete="off">
+      <form autoComplete="off" style={{ margin: '50px 70px 0 30px' }}>
 
         {this.state.addingSuccess &&
           <Alert bsStyle="success">
@@ -47,7 +51,7 @@ class TransactionsAdd extends Component {
           </Alert>
         }
 
-        <FormControl fullWidth>
+        <FormControl fullWidth style={{ marginBottom: '10px' }}>
           <InputLabel htmlFor="direction">Direction</InputLabel>
           <Select
             value={this.state.direction}
@@ -57,11 +61,11 @@ class TransactionsAdd extends Component {
               id: 'direction',
             }}
           >
-            <MenuItem value={2} key={2}>Credit</MenuItem>
-            <MenuItem value={1} key={1}>Debet</MenuItem>
+            <MenuItem value={1}>Credit</MenuItem>
+            <MenuItem value={0}>Debit</MenuItem>
           </Select>
         </FormControl>
-        <FormControl fullWidth>
+        <FormControl fullWidth style={{ marginBottom: '10px' }}>
           <InputLabel htmlFor="category">Category</InputLabel>
           <Select
             value={this.state.category}
@@ -75,13 +79,23 @@ class TransactionsAdd extends Component {
             <MenuItem value={4}>cat4</MenuItem>
           </Select>
         </FormControl>
-        <FormControl fullWidth>
+        <FormControl fullWidth style={{ marginBottom: '10px' }}>
           <InputLabel htmlFor="amount">Amount</InputLabel>
           <Input
             id="amount"
+            type="number"
             value={this.state.amount}
             onChange={this.handleChange('amount')}
             startAdornment={<InputAdornment position="start">$</InputAdornment>}
+          />
+        </FormControl>
+        <FormControl fullWidth style={{ marginBottom: '10px' }}>
+          <InputLabel htmlFor="time">Time</InputLabel>
+          <Input
+            id="time"
+            type="time"
+            value={this.state.time}
+            onChange={this.handleChange('time')}
           />
         </FormControl>
         <Button variant="raised" onClick={() => this.props.data.add(this.state)}>

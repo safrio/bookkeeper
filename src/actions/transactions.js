@@ -117,10 +117,10 @@ export function transactionsAdd(data) {
     	method: 'post',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
-        "category_id": 5,
-        "direction": 1,
-        "published_at": '2018-05-17',
-        "sum": 3,
+        "category_id": data.category,
+        "direction": data.direction,
+        "published_at": moment(data.date).format("DD-MM-YYYY") + ' ' + data.time,
+        "sum": data.amount,
       })
     })
       .then((response) => {

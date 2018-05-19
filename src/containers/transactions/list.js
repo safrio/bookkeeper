@@ -28,41 +28,55 @@ const TransactionsListContainer = (props) => {
 	const { transactions, remove } = props.data
 	const { classes } = props;
 
-  return (
-  	<div>
-      <Button color="inherit"
-	    	classes={{ root: classes.button }}
-	    	component={Link}
-	    	to={'/transactions/add'}>Add</Button>
-		  <MuiThemeProvider>
-			  <Table>
-			    <TableHeader>
-			      <TableRow>
-			        <TableHeaderColumn>Amount</TableHeaderColumn>
-			        <TableHeaderColumn>Time</TableHeaderColumn>
-			        <TableHeaderColumn></TableHeaderColumn>
-			      </TableRow>
-			    </TableHeader>
-			    <TableBody>
-
+	const table = (
+	  <MuiThemeProvider>
+		  <Table>
+		    <TableHeader displaySelectAll={false}>
+		      <TableRow>
+		        <TableHeaderColumn>Amount</TableHeaderColumn>
+		        <TableHeaderColumn>Time</TableHeaderColumn>
+		        <TableHeaderColumn></TableHeaderColumn>
+		      </TableRow>
+		    </TableHeader>
+		    <TableBody displayRowCheckbox={false}>
 		      {transactions.map((item) => (
-			      <TableRow key={item.id}>
+			      <TableRow
+			      	key={item.id}
+			      	style={{ backgroundColor: item.direction == 'credit' ? 'rgba(255, 0, 0, 0.08)' : 'rgba(0, 255, 0, 0.08)' }}>
 			        <TableRowColumn>{item.sum}</TableRowColumn>
 			        <TableRowColumn>{moment(item.published_at).format('HH:mm')}</TableRowColumn>
 			        <TableRowColumn>
-		            <Button color="inherit"
+		            <Button 
+		            	variant="raised" 
+		            	color="inherit"
 			          	classes={{ root: classes.button }}
 			          	component={Link}
 			          	to={'/transactions/' + item.id + '/edit'}>Edit</Button>
-		            <Button color="inherit"
+		            <Button
+		            	variant="raised" 
+		            	color="inherit"
 			          	classes={{ root: classes.button }}
 			          	onClick={() => remove(item.id)}>Remove</Button>
 			        </TableRowColumn>
 			      </TableRow>
 		      ))}
-			    </TableBody>
-			  </Table>
-		  </MuiThemeProvider>
+		    </TableBody>
+		  </Table>
+	  </MuiThemeProvider>
+	);
+
+  return (
+  	<div>
+      <Button
+      	variant="raised" 
+      	color="inherit"
+	    	classes={{ root: classes.button }}
+	    	component={Link}
+	    	to={'/transactions/add'}>Add</Button>
+	    	{transactions.length === 0
+	    		? <p>Transactions list is empty</p>
+	    		: table
+	    	}
 	  </div>
   );
 }
