@@ -28,13 +28,18 @@ const TransactionsListContainer = (props) => {
 	const { transactions, remove } = props.data
 	const { classes } = props;
 
+	let sum = 0;
+	transactions.map((item) => 
+		sum += (item.direction === 'credit' ? -item.sum : item.sum)
+	);
+
 	const table = (
 	  <MuiThemeProvider>
 		  <Table>
 		    <TableHeader displaySelectAll={false}>
 		      <TableRow>
-		        <TableHeaderColumn>Amount</TableHeaderColumn>
 		        <TableHeaderColumn>Time</TableHeaderColumn>
+		        <TableHeaderColumn>Amount</TableHeaderColumn>
 		        <TableHeaderColumn></TableHeaderColumn>
 		      </TableRow>
 		    </TableHeader>
@@ -43,8 +48,8 @@ const TransactionsListContainer = (props) => {
 			      <TableRow
 			      	key={item.id}
 			      	style={{ backgroundColor: item.direction == 'credit' ? 'rgba(255, 0, 0, 0.08)' : 'rgba(0, 255, 0, 0.08)' }}>
+			        <TableRowColumn>{moment(item.published_at, "YYYY-MM-DD\THH:mm:ss").format('HH:mm')}</TableRowColumn>
 			        <TableRowColumn>{item.sum}</TableRowColumn>
-			        <TableRowColumn>{moment(item.published_at).format('HH:mm')}</TableRowColumn>
 			        <TableRowColumn>
 		            <Button 
 		            	variant="raised" 
@@ -60,13 +65,18 @@ const TransactionsListContainer = (props) => {
 			        </TableRowColumn>
 			      </TableRow>
 		      ))}
+			      <TableRow>
+			        <TableRowColumn>TOTAL:</TableRowColumn>
+			        <TableRowColumn>{sum}</TableRowColumn>
+			        <TableRowColumn></TableRowColumn>
+			      </TableRow>
 		    </TableBody>
 		  </Table>
 	  </MuiThemeProvider>
 	);
 
   return (
-  	<div>
+  	<div style={{ margin: "30px 50px 0 0" }}>
       <Button
       	variant="raised" 
       	color="inherit"
@@ -74,7 +84,7 @@ const TransactionsListContainer = (props) => {
 	    	component={Link}
 	    	to={'/transactions/add'}>Add</Button>
 	    	{transactions.length === 0
-	    		? <p>Transactions list is empty</p>
+	    		? <p style={{ margin: "30px 0" }}>Transactions list is empty</p>
 	    		: table
 	    	}
 	  </div>

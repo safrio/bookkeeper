@@ -19,7 +19,7 @@ class TransactionsList extends Component {
 
   render() {
     if (this.props.data.transactions.hasErrored) {
-      return <p>Sorry! There was an error loading the items</p>;
+      return <p>Sorry! There was an error loading the transactions</p>;
     }
 
     if (this.props.data.transactions.isLoading) {

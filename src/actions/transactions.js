@@ -47,7 +47,7 @@ export function transactionRemoveErrored(bool) {
   };
 }
 
-// Removing
+// Adding
 
 export function transactionIsAdding(bool) {
   return {
@@ -105,7 +105,7 @@ export function transactionsRemove(id) {
         return response;
       })
       .then((response) => response.json())
-      .then((response) => dispatch(transactionRemoveSuccess(true)))
+      .then((response) => dispatch(transactionRemoveSuccess(id)))
       .catch(() => dispatch(transactionRemoveErrored(true)));
   };
 }

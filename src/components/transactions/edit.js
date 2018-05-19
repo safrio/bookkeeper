@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import TransactionForm from '../../containers/transactions/form';
 
-class TransactionsAdd extends Component {
-  constructor(props, context){
-    super(props, context);
+class TransactionsEdit extends Component {
+  constructor(props){
+    super(props);
 
     this.state = {
       direction: 1,
@@ -37,4 +37,4 @@ class TransactionsAdd extends Component {
   }
 };
 
-export default TransactionsAdd
+export default TransactionsEdit

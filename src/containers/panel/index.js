@@ -22,7 +22,7 @@ const styles = theme => ({
 
 const PanelComponent = (props) => {
   const { classes, data } = props;
-  
+
   return (
     <div>
       <AppBar position="static" color="default" position="sticky">
@@ -33,7 +33,7 @@ const PanelComponent = (props) => {
           <Button color="inherit"
           	classes={{ root: classes.button }}
           	component={Link}
-          	to="/">Home</Button>
+          	to="/">Transactions</Button>
           <Button color="inherit"
           	classes={{ root: classes.button }}
           	component={Link}

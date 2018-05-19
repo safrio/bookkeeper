@@ -11,6 +11,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import TransactionsList from './list';
 import TransactionsAdd from './add';
+import TransactionsEdit from './edit';
 
 class Transactions extends Component {
   constructor(props, context) {
@@ -25,6 +26,8 @@ class Transactions extends Component {
             render={() => <TransactionsList data={this.props} />} />
           <Route exact path='/transactions/add'
             render={() => <TransactionsAdd data={this.props} />} />
+          <Route exact path='/transactions/:id/edit'
+            render={() => <TransactionsEdit data={this.props} />} />
         </Switch>
       </ul>
     );
