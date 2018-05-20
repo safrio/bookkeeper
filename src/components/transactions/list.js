@@ -27,9 +27,9 @@ const styles = theme => ({
 
 const TransactionsListContainer = (props) => {
 	const {
-		transactions, remove, removingError, 
-		removingSuccess, isLoading, hasErrored } = props.data;
-	const { classes, removeDisabled } = props;
+		transactions, remove, removingError, removingSuccess, 
+    isLoading, hasErrored, categories } = props.data;
+	const { classes, removeDisabled, categoryName } = props;
 
 	let sum = 0;
 	transactions.map((item) => 
@@ -41,7 +41,8 @@ const TransactionsListContainer = (props) => {
 		  <Table>
 		    <TableHeader displaySelectAll={false}>
 		      <TableRow>
-		        <TableHeaderColumn>Time</TableHeaderColumn>
+            <TableHeaderColumn>Time</TableHeaderColumn>
+		        <TableHeaderColumn>Category</TableHeaderColumn>
 		        <TableHeaderColumn>Amount</TableHeaderColumn>
 		        <TableHeaderColumn></TableHeaderColumn>
 		      </TableRow>
@@ -52,8 +53,9 @@ const TransactionsListContainer = (props) => {
 			      	key={item.id}
 			      	style={{ backgroundColor: item.direction === 'credit' ? 'rgba(255, 0, 0, 0.08)' : 'rgba(0, 255, 0, 0.08)' }}>
 			        <TableRowColumn>{moment(item.published_at, "YYYY-MM-DDTHH:mm:ss").format('HH:mm')}</TableRowColumn>
-			        <TableRowColumn>{item.sum}</TableRowColumn>
-			        <TableRowColumn>
+			        <TableRowColumn>{categoryName(categories, item.category_id)}</TableRowColumn>
+              <TableRowColumn>{item.sum}</TableRowColumn>
+			        <TableRowColumn style={{ textAlign: 'right' }}>
 		            <Button 
 		            	variant="raised" 
 		            	color="inherit"
@@ -71,6 +73,7 @@ const TransactionsListContainer = (props) => {
 		      ))}
 			      <TableRow>
 			        <TableRowColumn>TOTAL:</TableRowColumn>
+              <TableRowColumn></TableRowColumn>
 			        <TableRowColumn>{sum}</TableRowColumn>
 			        <TableRowColumn></TableRowColumn>
 			      </TableRow>

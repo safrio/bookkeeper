@@ -21,6 +21,7 @@ class TransactionsEdit extends Component {
 
   componentDidMount() {
     this.props.data.fetchOne(this.props.data.match.params.id);
+    this.props.data.categoriesFetchData();
   }
 
   componentWillReceiveProps(props) {

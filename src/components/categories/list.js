@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'
-import moment from 'moment';
 import { Alert } from 'react-bootstrap';
 
 import {
@@ -45,7 +44,7 @@ const CategoriesListContainer = (props) => {
 			      <TableRow
 			      	key={item.id}>
 			        <TableRowColumn>{item.name}</TableRowColumn>
-			        <TableRowColumn>
+			        <TableRowColumn style={{ textAlign: 'right' }}>
 		            <Button 
 		            	variant="raised" 
 		            	color="inherit"

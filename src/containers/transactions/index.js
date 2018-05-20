@@ -8,6 +8,9 @@ import {
   transactionsAdd,
   transactionsEdit,
 } from '../../actions/transactions';
+import {
+  categoriesFetchData,
+} from '../../actions/categories';
 
 import { Route, Switch } from 'react-router-dom';
 
@@ -39,6 +42,7 @@ Transactions.propTypes = {
   add: PropTypes.func.isRequired,
   edit: PropTypes.func.isRequired,
   transactions: PropTypes.array.isRequired,
+  categories: PropTypes.array.isRequired,
   hasErrored: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   addingSuccess: PropTypes.bool.isRequired,
@@ -70,6 +74,7 @@ const mapStateToProps = (state) => {
     removing: state.transactions.transactionIsRemoving,
     removingId: state.transactions.transactionRemovingId,
     date: state.transactions.date,
+    categories: state.categories.categories,
   };
 };
 
@@ -80,6 +85,7 @@ const mapDispatchToProps = (dispatch) => {
     remove: (id) => dispatch(transactionsRemove(id)),
     add: (data) => dispatch(transactionsAdd(data)),
     edit: (id, data) => dispatch(transactionsEdit(id, data)),
+    categoriesFetchData: () => dispatch(categoriesFetchData()),
   };
 };
 

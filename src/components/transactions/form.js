@@ -63,8 +63,9 @@ const TransactionForm = ({ states, handleChange, data }) => {
             id: 'category',
           }}
         >
-          <MenuItem value={3}>cat3</MenuItem>
-          <MenuItem value={4}>cat4</MenuItem>
+          {data.categories.map((cat) => (
+          <MenuItem value={cat.id} key={cat.id}>{cat.name}</MenuItem>
+          ))}
         </Select>
       </FormControl>
       <FormControl fullWidth style={{ marginBottom: '10px' }}>

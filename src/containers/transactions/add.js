@@ -18,6 +18,10 @@ class TransactionsAdd extends Component {
       date: this.props.data.date,
     }
   }
+  
+  componentDidMount() {
+    this.props.data.categoriesFetchData();
+  }
 
   componentWillReceiveProps(props) {
     this.setState({ 

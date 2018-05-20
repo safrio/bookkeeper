@@ -9,6 +9,7 @@ class TransactionsList extends Component {
 
   componentDidMount() {
     this.props.data.fetchData(this.props.data.date);
+    this.props.data.categoriesFetchData();
   }
 
   componentWillReceiveProps(props) {
@@ -21,11 +22,17 @@ class TransactionsList extends Component {
     return !! + (removing && removingId === id);
   } 
 
+  categoryName(categories, id) {
+    const cat = categories.find(c => c.id === id);
+    return cat ? cat.name : '';
+  }
+
   render() {
     return (
       <TransactionsListContainer
         data={this.props.data}
-        removeDisabled={this.removeDisabled} />
+        removeDisabled={this.removeDisabled}
+        categoryName={this.categoryName} />
     );
   }
 }
