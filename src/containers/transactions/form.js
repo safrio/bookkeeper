@@ -15,9 +15,15 @@ const TransactionForm = ({ states, handleChange, data }) => {
   return(
     <form autoComplete="off" style={{ margin: '50px 70px 0 30px' }}>
 
-      {states.addingSuccess &&
+      {states.action === 'add' && states.addingSuccess &&
         <Alert bsStyle="success">
           Good job!
+        </Alert>
+      }
+
+      {states.action === 'edit' && states.editingSuccess &&
+        <Alert bsStyle="success">
+          Good job22!
         </Alert>
       }
 
@@ -68,8 +74,16 @@ const TransactionForm = ({ states, handleChange, data }) => {
           onChange={handleChange('time')}
         />
       </FormControl>
-      <Button variant="raised" onClick={() => data.add(states)}>
-        Add
+      <Button
+        variant="raised"
+        onClick={() => {
+          states.action === 'add'
+            ? data.add(states)
+            : data.edit(data.match.params.id, states)
+        }}>
+        {states.action === 'add'
+          ? <span>Add</span>
+          : <span>Edit</span>}
       </Button>
     </form>
   );

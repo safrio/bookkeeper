@@ -56,7 +56,7 @@ const TransactionsListContainer = (props) => {
 		            	color="inherit"
 			          	classes={{ root: classes.button }}
 			          	component={Link}
-			          	to={'/transactions/' + item.id + '/edit'}>Edit</Button>
+			          	to={'/transactions/' + item.id}>Edit</Button>
 		            <Button
 		            	variant="raised" 
 		            	color="inherit"

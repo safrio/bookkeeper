@@ -1,5 +1,6 @@
 import config from '../config/config'
 import moment from 'moment'
+import axios from 'axios'
 
 // Fetching
 
@@ -21,6 +22,29 @@ export function transactionsFetchDataSuccess(transactions) {
   return {
     type: 'TRANSACTIONS_FETCH_DATA_SUCCESS',
     transactions
+  };
+}
+
+// Fetching one
+
+export function transactionHasErrored(bool) {
+  return {
+    type: 'TRANSACTION_HAS_ERRORED',
+    transactionHasErrored: bool
+  };
+}
+
+export function transactionIsLoading(bool) {
+  return {
+    type: 'TRANSACTION_IS_LOADING',
+    transactionIsLoading: bool
+  };
+}
+
+export function transactionFetchDataSuccess(transaction) {
+  return {
+    type: 'TRANSACTION_FETCH_DATA_SUCCESS',
+    transaction
   };
 }
 
@@ -70,6 +94,29 @@ export function transactionAddingErrored(bool) {
   };
 }
 
+// Editing
+
+export function transactionIsEditing(bool) {
+  return {
+    type: 'TRANSACTION_IS_EDITING',
+    transactionIsEditing: bool
+  };
+}
+
+export function transactionEditingSuccess(bool) {
+  return {
+    type: 'TRANSACTION_EDITING_SUCCESS',
+    transactionEditingSuccess: bool
+  };
+}
+
+export function transactionEditingErrored(bool) {
+  return {
+    type: 'TRANSACTION_EDITING_ERROR',
+    transactionEditingErrored: bool
+  };
+}
+
 // ---
 
 export function transactionsFetchData(date) {
@@ -87,6 +134,25 @@ export function transactionsFetchData(date) {
       })
       .then((response) => response.json())
       .then((transactions) => dispatch(transactionsFetchDataSuccess(transactions)))
+      .catch(() => dispatch(transactionsHasErrored(true)));
+  };
+}
+
+export function transactionFetchData(id) {
+  return (dispatch) => {
+    // dispatch(transactionIsLoading(true));
+    axios.get(config.transactionsURL + '/' + id)
+      // .then((response) => {
+      //   if (!response.ok) {
+      //     throw Error(response.statusText);
+      //   }
+
+      //   dispatch(transactionIsLoading(false));
+
+      //   return response;
+      // })
+      // .then((response) => response.json())
+      .then((transaction) => dispatch(transactionFetchDataSuccess(transaction.data)))
       .catch(() => dispatch(transactionsHasErrored(true)));
   };
 }
@@ -135,5 +201,22 @@ export function transactionsAdd(data) {
       .then((response) => response.json())
       .then((response) => dispatch(transactionAddingSuccess(true)))
       .catch(() => dispatch(transactionAddingErrored(true)));
+  };
+}
+
+export function transactionsEdit(id, data) {
+  return (dispatch) => {
+    dispatch(transactionIsEditing(true));
+    axios.patch(config.transactionsURL + '/' + id, 
+      JSON.stringify({
+        "category_id": data.category,
+        "direction": data.direction,
+        "published_at": moment(data.date).format("DD-MM-YYYY") + ' ' + data.time,
+        "sum": data.amount,
+      }),
+      { headers: { 'Content-Type': 'application/json' } }
+    )
+      .then((response) => dispatch(transactionEditingSuccess(true)))
+      .catch(() => dispatch(transactionEditingErrored(true)));
   };
 }

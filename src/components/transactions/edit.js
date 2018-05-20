@@ -7,18 +7,30 @@ class TransactionsEdit extends Component {
     super(props);
 
     this.state = {
+      action: 'edit',
       direction: 1,
       category: 3,
       amount: 0,
-      addingSuccess: false,
+      editingSuccess: false,
       time: moment().format('HH:mm'),
       date: this.props.data.date,
     }
   }
 
+  componentDidMount() {
+    this.props.data.fetchOne(this.props.data.match.params.id);
+  }
+
   componentWillReceiveProps(props) {
-    this.setState({ date: props.data.date })
-    this.setState({ addingSuccess: props.data.addingSuccess })
+    console.log(props)
+    this.setState({
+      amount: props.data.transaction.sum,
+      direction: props.data.transaction.direction === 'credit' ? 1 : 0,
+      category: props.data.transaction.category_id,
+      time: moment(props.data.transaction.published_at, "YYYY-MM-DD\THH:mm:ss").format('HH:mm'),
+      date: props.data.date,
+      editingSuccess: props.data.editingSuccess,
+    });
   }
 
   handleChange = prop => event => {

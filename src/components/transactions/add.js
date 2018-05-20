@@ -7,6 +7,7 @@ class TransactionsAdd extends Component {
     super(props, context);
 
     this.state = {
+      action: 'add',
       direction: 1,
       category: 3,
       amount: 0,

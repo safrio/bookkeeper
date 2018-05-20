@@ -18,7 +18,7 @@ render(
         <Route path='/' render={() => <Panel />} />
 	      <Switch>
 	        <Route exact path='/' component={Transactions} />
-	        <Route path='/transactions' component={Transactions} />
+	        <Route path='/transactions/:id' component={Transactions} />
 	      </Switch>
       </div>
     </Router>
