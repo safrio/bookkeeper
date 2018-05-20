@@ -38,6 +38,9 @@ class Transactions extends Component {
 Transactions.propTypes = {
   fetchOne: PropTypes.func.isRequired,
   fetchData: PropTypes.func.isRequired,
+  oneHasErrored: PropTypes.bool.isRequired,
+  oneLoadingSuccess: PropTypes.bool.isRequired,
+  oneIsLoading: PropTypes.bool.isRequired,
   remove: PropTypes.func.isRequired,
   add: PropTypes.func.isRequired,
   edit: PropTypes.func.isRequired,
@@ -57,24 +60,27 @@ Transactions.propTypes = {
   removingId: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ transactions, categories }) => {
   return {
-    transaction: state.transactions.transaction,
-    transactions: state.transactions.transactions,
-    hasErrored: state.transactions.transactionsHasErrored,
-    isLoading: state.transactions.transactionsIsLoading,
-    addingError: state.transactions.transactionAddingError,
-    addingSuccess: state.transactions.transactionAddingSuccess,
-    adding: state.transactions.transactionIsAdding,
-    editingError: state.transactions.transactionEditingError,
-    editingSuccess: state.transactions.transactionEditingSuccess,
-    editing: state.transactions.transactionIsEditing,
-    removingError: state.transactions.transactionRemoveError,
-    removingSuccess: state.transactions.transactionRemovingSuccess,
-    removing: state.transactions.transactionIsRemoving,
-    removingId: state.transactions.transactionRemovingId,
-    date: state.transactions.date,
-    categories: state.categories.categories,
+    transaction: transactions.transaction,
+    transactions: transactions.transactions,
+    hasErrored: transactions.transactionsHasErrored,
+    isLoading: transactions.transactionsIsLoading,
+    oneHasErrored: transactions.transactionHasErrored,
+    oneLoadingSuccess: transactions.transactionLoadingSuccess,
+    oneIsLoading: transactions.transactionIsLoading,
+    addingError: transactions.transactionAddingError,
+    addingSuccess: transactions.transactionAddingSuccess,
+    adding: transactions.transactionIsAdding,
+    editingError: transactions.transactionEditingError,
+    editingSuccess: transactions.transactionEditingSuccess,
+    editing: transactions.transactionIsEditing,
+    removingError: transactions.transactionRemoveError,
+    removingSuccess: transactions.transactionRemovingSuccess,
+    removing: transactions.transactionIsRemoving,
+    removingId: transactions.transactionRemovingId,
+    date: transactions.date,
+    categories: categories.categories,
   };
 };
 

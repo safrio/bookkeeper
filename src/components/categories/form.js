@@ -9,8 +9,19 @@ import { Alert } from 'react-bootstrap';
 const CategoriesForm = ({ states, handleChange, data }) => {
   const disabled = states.adding || states.editing;
 
+  if (data.hasErrored)
+    return (
+      <Alert bsStyle="danger" style={{ margin: '30px 30px 0 0' }}>
+        Error category transaction ID {data.match.params.id}
+      </Alert>
+    )
+
   return(
     <form autoComplete="off" style={{ margin: '50px 70px 0 30px' }}>
+
+      {states.action === 'add'
+        ? <h3 style={{ margin: '20px 0' }}>Add category</h3>
+        : <h3 style={{ margin: '20px 0' }}>Edit category</h3>}
 
       {states.action === 'add' && states.addingSuccess &&
         <Alert bsStyle="success">
@@ -54,9 +65,7 @@ const CategoriesForm = ({ states, handleChange, data }) => {
             ? data.add(states)
             : data.edit(data.match.params.id, states)
         }}>
-        {states.action === 'add'
-          ? <span>Add</span>
-          : <span>Edit</span>}
+        Save
       </Button>
     </form>
   );

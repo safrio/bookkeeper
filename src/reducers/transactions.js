@@ -25,8 +25,26 @@ export default function transactions(state = initialState, action) {
       }
 
     // Fetching one
+    case 'TRANSACTION_HAS_ERRORED':
+      return {
+        ...state,
+        transactionLoadingSuccess: action.transactionLoadingSuccess,
+        transactionHasErrored: action.transactionHasErrored
+      }
+    case 'TRANSACTION_IS_LOADING':
+      return {
+        ...state,
+        transactionLoadingSuccess: action.transactionLoadingSuccess,
+        transactionHasErrored: action.transactionHasErrored,
+        transactionIsLoading: action.transactionIsLoading
+      }
     case 'TRANSACTION_FETCH_DATA_SUCCESS':
-      return { ...state, transaction: action.transaction }
+      return {
+        ...state,
+        transactionHasErrored: action.transactionHasErrored,
+        transactionLoadingSuccess: action.transactionLoadingSuccess,
+        transaction: action.transaction
+      }
 
     // Adding
     case 'TRANSACTION_IS_ADDING':

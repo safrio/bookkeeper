@@ -53,22 +53,22 @@ Categories.propTypes = {
   removingId: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ categories }) => {
   return {
-    category: state.categories.category,
-    categories: state.categories.categories,
-    hasErrored: state.categories.categoriesHasErrored,
-    isLoading: state.categories.categoriesIsLoading,
-    addingError: state.categories.categoryAddingError,
-    addingSuccess: state.categories.categoryAddingSuccess,
-    adding: state.categories.categoryIsAdding,
-    editingError: state.categories.categoryEditingError,
-    editingSuccess: state.categories.categoryEditingSuccess,
-    editing: state.categories.categoryIsEditing,
-    removingError: state.categories.categoryRemoveError,
-    removingSuccess: state.categories.categoryRemovingSuccess,
-    removing: state.categories.categoryIsRemoving,
-    removingId: state.categories.categoryRemovingId,
+    category: categories.category,
+    categories: categories.categories,
+    hasErrored: categories.categoriesHasErrored,
+    isLoading: categories.categoriesIsLoading,
+    addingError: categories.categoryAddingError,
+    addingSuccess: categories.categoryAddingSuccess,
+    adding: categories.categoryIsAdding,
+    editingError: categories.categoryEditingError,
+    editingSuccess: categories.categoryEditingSuccess,
+    editing: categories.categoryIsEditing,
+    removingError: categories.categoryRemoveError,
+    removingSuccess: categories.categoryRemovingSuccess,
+    removing: categories.categoryIsRemoving,
+    removingId: categories.categoryRemovingId,
   };
 };
 

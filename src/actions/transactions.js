@@ -33,6 +33,7 @@ export function transactionsFetchDataSuccess(transactions) {
 export function transactionHasErrored() {
   return {
     type: 'TRANSACTION_HAS_ERRORED',
+    transactionLoadingSuccess: false,
     transactionHasErrored: true
   };
 }
@@ -40,6 +41,8 @@ export function transactionHasErrored() {
 export function transactionIsLoading() {
   return {
     type: 'TRANSACTION_IS_LOADING',
+    transactionLoadingSuccess: false,
+    transactionHasErrored: false,
     transactionIsLoading: true
   };
 }
@@ -47,6 +50,8 @@ export function transactionIsLoading() {
 export function transactionFetchDataSuccess(transaction) {
   return {
     type: 'TRANSACTION_FETCH_DATA_SUCCESS',
+    transactionHasErrored: false,
+    transactionLoadingSuccess: true,
     transaction
   };
 }

@@ -12,8 +12,19 @@ import { Alert } from 'react-bootstrap';
 const TransactionForm = ({ states, handleChange, data }) => {
   const disabled = states.adding || states.editing;
 
+  if (data.oneHasErrored)
+    return (
+      <Alert bsStyle="danger" style={{ margin: '30px 30px 0 0' }}>
+        Error loading transaction ID {data.match.params.id}
+      </Alert>
+    )
+  
   return(
     <form autoComplete="off" style={{ margin: '50px 70px 0 30px' }}>
+
+      {states.action === 'add'
+        ? <h3 style={{ margin: '20px 0' }}>Add transaction</h3>
+        : <h3 style={{ margin: '20px 0' }}>Edit transaction</h3>}
 
       {states.action === 'add' && states.addingSuccess &&
         <Alert bsStyle="success">
@@ -63,6 +74,9 @@ const TransactionForm = ({ states, handleChange, data }) => {
             id: 'category',
           }}
         >
+          <MenuItem value="">
+            <em>Choose one</em>
+          </MenuItem>
           {data.categories.map((cat) => (
           <MenuItem value={cat.id} key={cat.id}>{cat.name}</MenuItem>
           ))}
@@ -96,9 +110,7 @@ const TransactionForm = ({ states, handleChange, data }) => {
             ? data.add(states)
             : data.edit(data.match.params.id, states)
         }}>
-        {states.action === 'add'
-          ? <span>Add</span>
-          : <span>Edit</span>}
+        Save
       </Button>
     </form>
   );

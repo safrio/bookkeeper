@@ -4,8 +4,13 @@ export default {
   transactions: [],
   transaction: {},
 
+  transactionsLoadingSuccess: false,
   transactionsIsLoading: false,
   transactionsHasErrored: false,
+
+  transactionLoadingSuccess: false,
+  transactionIsLoading: false,
+  transactionHasErrored: false,
 
   transactionAddingSuccess: false,
   transactionIsAdding: false,
