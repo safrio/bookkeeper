@@ -12,14 +12,20 @@ class TransactionsAdd extends Component {
       category: 3,
       amount: 0,
       addingSuccess: false,
+      addingError: false,
+      adding: false,
       time: moment().format('HH:mm'),
       date: this.props.data.date,
     }
   }
 
   componentWillReceiveProps(props) {
-    this.setState({ date: props.data.date })
-    this.setState({ addingSuccess: props.data.addingSuccess })
+    this.setState({ 
+      date: props.data.date,
+      addingSuccess: props.data.addingSuccess,
+      addingError: props.data.addingError,
+      adding: props.data.adding,
+    });
   }
 
   handleChange = prop => event => {

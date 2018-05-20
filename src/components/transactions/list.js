@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import TransactionsListContainer from '../../containers/transactions/list';
 
 class TransactionsList extends Component {
   constructor(props) {
-    super(props)
+    super(props);
+    this.props = props;
   }
 
   componentDidMount() {
@@ -12,22 +12,20 @@ class TransactionsList extends Component {
   }
 
   componentWillReceiveProps(props) {
-    if (this.props.data.date != props.data.date) {
+    if (this.props.data.date !== props.data.date) {
       this.props.data.fetchData(props.data.date);
     }
   }
 
+  removeDisabled(removing, removingId, id) {
+    return !! + (removing && removingId === id);
+  } 
+
   render() {
-    if (this.props.data.transactions.hasErrored) {
-      return <p>Sorry! There was an error loading the transactions</p>;
-    }
-
-    if (this.props.data.transactions.isLoading) {
-      return <p>Loading…</p>;
-    }
-
     return (
-      <TransactionsListContainer data={this.props.data} />
+      <TransactionsListContainer
+        data={this.props.data}
+        removeDisabled={this.removeDisabled} />
     );
   }
 }

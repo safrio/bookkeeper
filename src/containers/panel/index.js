@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'
 
@@ -25,7 +25,7 @@ const PanelComponent = (props) => {
 
   return (
     <div>
-      <AppBar position="static" color="default" position="sticky">
+      <AppBar position="static" color="default">
         <Toolbar>
           <Typography variant="title" color="inherit" className={classes.flex}>
             The bookkeeper

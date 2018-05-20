@@ -6,10 +6,6 @@ import PanelComponent from '../../containers/panel/';
 import { dateHasChanged } from '../../actions/panel';
 
 class Panel extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
       <PanelComponent data={this.props} />

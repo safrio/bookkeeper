@@ -16,10 +16,6 @@ import TransactionsAdd from './add';
 import TransactionsEdit from './edit';
 
 class Transactions extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
       <ul>
@@ -46,7 +42,15 @@ Transactions.propTypes = {
   hasErrored: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   addingSuccess: PropTypes.bool.isRequired,
+  addingError: PropTypes.bool.isRequired,
+  adding: PropTypes.bool.isRequired,
   editingSuccess: PropTypes.bool.isRequired,
+  editingError: PropTypes.bool.isRequired,
+  editing: PropTypes.bool.isRequired,
+  removingError: PropTypes.bool.isRequired,
+  removingSuccess: PropTypes.bool.isRequired,
+  removing: PropTypes.bool.isRequired,
+  removingId: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -55,8 +59,16 @@ const mapStateToProps = (state) => {
     transactions: state.transactions.transactions,
     hasErrored: state.transactions.transactionsHasErrored,
     isLoading: state.transactions.transactionsIsLoading,
+    addingError: state.transactions.transactionAddingError,
     addingSuccess: state.transactions.transactionAddingSuccess,
+    adding: state.transactions.transactionIsAdding,
+    editingError: state.transactions.transactionEditingError,
     editingSuccess: state.transactions.transactionEditingSuccess,
+    editing: state.transactions.transactionIsEditing,
+    removingError: state.transactions.transactionRemoveError,
+    removingSuccess: state.transactions.transactionRemovingSuccess,
+    removing: state.transactions.transactionIsRemoving,
+    removingId: state.transactions.transactionRemovingId,
     date: state.transactions.date,
   };
 };

@@ -4,40 +4,43 @@ import axios from 'axios'
 
 // Fetching
 
-export function transactionsHasErrored(bool) {
+export function transactionsHasErrored() {
   return {
     type: 'TRANSACTIONS_HAS_ERRORED',
-    transactionsHasErrored: bool
+    transactionsIsLoading: false,
+    transactionsHasErrored: true
   };
 }
 
-export function transactionsIsLoading(bool) {
+export function transactionsIsLoading() {
   return {
     type: 'TRANSACTIONS_IS_LOADING',
-    transactionsIsLoading: bool
+    transactionsIsLoading: true
   };
 }
 
 export function transactionsFetchDataSuccess(transactions) {
   return {
     type: 'TRANSACTIONS_FETCH_DATA_SUCCESS',
+    transactionsIsLoading: false,
+    transactionsHasErrored: false,
     transactions
   };
 }
 
 // Fetching one
 
-export function transactionHasErrored(bool) {
+export function transactionHasErrored() {
   return {
     type: 'TRANSACTION_HAS_ERRORED',
-    transactionHasErrored: bool
+    transactionHasErrored: true
   };
 }
 
-export function transactionIsLoading(bool) {
+export function transactionIsLoading() {
   return {
     type: 'TRANSACTION_IS_LOADING',
-    transactionIsLoading: bool
+    transactionIsLoading: true
   };
 }
 
@@ -50,70 +53,80 @@ export function transactionFetchDataSuccess(transaction) {
 
 // Removing
 
-export function transactionIsRemoving(bool) {
+export function transactionIsRemoving(id) {
   return {
     type: 'TRANSACTION_IS_REMOVING',
-    transactionIsRemoving: bool
+    transactionIsRemoving: true,
+    transactionRemovingId: id
   };
 }
 
 export function transactionRemoveSuccess(id) {
   return {
     type: 'TRANSACTION_REMOVE_SUCCESS',
+    transactionIsRemoving: false,
+    transactionRemovingSuccess: true,
+    transactionRemoveErrored: false,
     id
   };
 }
 
-export function transactionRemoveErrored(bool) {
+export function transactionRemoveErrored() {
   return {
     type: 'TRANSACTION_REMOVE_ERROR',
-    transactionRemoveErrored: bool
+    transactionIsRemoving: false,
+    transactionRemovingSuccess: false,
+    transactionRemoveErrored: true
   };
 }
 
 // Adding
 
-export function transactionIsAdding(bool) {
+export function transactionIsAdding() {
   return {
     type: 'TRANSACTION_IS_ADDING',
-    transactionIsAdding: bool
+    transactionIsAdding: true
   };
 }
 
-export function transactionAddingSuccess(bool) {
+export function transactionAddingSuccess() {
   return {
     type: 'TRANSACTION_ADDING_SUCCESS',
-    transactionAddingSuccess: bool
+    transactionIsAdding: false,
+    transactionAddingSuccess: true
   };
 }
 
-export function transactionAddingErrored(bool) {
+export function transactionAddingErrored() {
   return {
     type: 'TRANSACTION_ADDING_ERROR',
-    transactionAddingErrored: bool
+    transactionIsAdding: false,
+    transactionAddingErrored: true
   };
 }
 
 // Editing
 
-export function transactionIsEditing(bool) {
+export function transactionIsEditing() {
   return {
     type: 'TRANSACTION_IS_EDITING',
-    transactionIsEditing: bool
+    transactionIsEditing: true
   };
 }
 
-export function transactionEditingSuccess(bool) {
+export function transactionEditingSuccess() {
   return {
     type: 'TRANSACTION_EDITING_SUCCESS',
-    transactionEditingSuccess: bool
+    transactionIsEditing: false,
+    transactionEditingSuccess: true
   };
 }
 
-export function transactionEditingErrored(bool) {
+export function transactionEditingErrored() {
   return {
     type: 'TRANSACTION_EDITING_ERROR',
-    transactionEditingErrored: bool
+    transactionIsEditing: false,
+    transactionEditingErrored: true
   };
 }
 
@@ -121,34 +134,34 @@ export function transactionEditingErrored(bool) {
 
 export function transactionsFetchData(date) {
   return (dispatch) => {
-    dispatch(transactionsIsLoading(true));
+    dispatch(transactionsIsLoading());
     axios.get(config.transactionsURL + "?date=" + moment(date).format('DD-MM-YYYY'))
       .then((transactions) => dispatch(transactionsFetchDataSuccess(transactions.data)))
-      .catch(() => dispatch(transactionsHasErrored(true)));
+      .catch(() => dispatch(transactionsHasErrored()));
   };
 }
 
 export function transactionFetchData(id) {
   return (dispatch) => {
-    dispatch(transactionIsLoading(true));
+    dispatch(transactionIsLoading());
     axios.get(config.transactionsURL + '/' + id)
       .then((transaction) => dispatch(transactionFetchDataSuccess(transaction.data)))
-      .catch(() => dispatch(transactionsHasErrored(true)));
+      .catch(() => dispatch(transactionHasErrored()));
   };
 }
 
 export function transactionsRemove(id) {
   return (dispatch) => {
-    dispatch(transactionIsRemoving(true));
+    dispatch(transactionIsRemoving(id));
     axios.delete(config.transactionsURL + '/' + id)
-      .then((response) => dispatch(transactionRemoveSuccess(id)))
-      .catch(() => dispatch(transactionRemoveErrored(true)));
+      .then(() => dispatch(transactionRemoveSuccess(id)))
+      .catch(() => dispatch(transactionRemoveErrored()));
   };
 }
 
 export function transactionsAdd(data) {
   return (dispatch) => {
-    dispatch(transactionIsAdding(true));
+    dispatch(transactionIsAdding());
     axios.post(config.transactionsURL, 
       JSON.stringify({
         "category_id": data.category,
@@ -158,14 +171,14 @@ export function transactionsAdd(data) {
       }),
       { headers: { 'Content-Type': 'application/json' } }
     )
-      .then((response) => dispatch(transactionAddingSuccess(true)))
-      .catch(() => dispatch(transactionAddingErrored(true)));
+      .then((response) => dispatch(transactionAddingSuccess()))
+      .catch(() => dispatch(transactionAddingErrored()));
   };
 }
 
 export function transactionsEdit(id, data) {
   return (dispatch) => {
-    dispatch(transactionIsEditing(true));
+    dispatch(transactionIsEditing());
     axios.patch(config.transactionsURL + '/' + id, 
       JSON.stringify({
         "category_id": data.category,
@@ -175,7 +188,7 @@ export function transactionsEdit(id, data) {
       }),
       { headers: { 'Content-Type': 'application/json' } }
     )
-      .then((response) => dispatch(transactionEditingSuccess(true)))
-      .catch(() => dispatch(transactionEditingErrored(true)));
+      .then((response) => dispatch(transactionEditingSuccess()))
+      .catch(() => dispatch(transactionEditingErrored()));
   };
 }

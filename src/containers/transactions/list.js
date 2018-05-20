@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'
 import moment from 'moment';
+import { Alert } from 'react-bootstrap';
 
 import {
   Table,
@@ -25,8 +26,10 @@ const styles = theme => ({
 });
 
 const TransactionsListContainer = (props) => {
-	const { transactions, remove } = props.data
-	const { classes } = props;
+	const {
+		transactions, remove, removingError, 
+		removingSuccess, isLoading, hasErrored } = props.data;
+	const { classes, removeDisabled } = props;
 
 	let sum = 0;
 	transactions.map((item) => 
@@ -47,8 +50,8 @@ const TransactionsListContainer = (props) => {
 		      {transactions.map((item) => (
 			      <TableRow
 			      	key={item.id}
-			      	style={{ backgroundColor: item.direction == 'credit' ? 'rgba(255, 0, 0, 0.08)' : 'rgba(0, 255, 0, 0.08)' }}>
-			        <TableRowColumn>{moment(item.published_at, "YYYY-MM-DD\THH:mm:ss").format('HH:mm')}</TableRowColumn>
+			      	style={{ backgroundColor: item.direction === 'credit' ? 'rgba(255, 0, 0, 0.08)' : 'rgba(0, 255, 0, 0.08)' }}>
+			        <TableRowColumn>{moment(item.published_at, "YYYY-MM-DDTHH:mm:ss").format('HH:mm')}</TableRowColumn>
 			        <TableRowColumn>{item.sum}</TableRowColumn>
 			        <TableRowColumn>
 		            <Button 
@@ -60,6 +63,7 @@ const TransactionsListContainer = (props) => {
 		            <Button
 		            	variant="raised" 
 		            	color="inherit"
+	            		disabled={removeDisabled(props.data.removing, props.data.removingId, item.id)}
 			          	classes={{ root: classes.button }}
 			          	onClick={() => remove(item.id)}>Remove</Button>
 			        </TableRowColumn>
@@ -83,6 +87,31 @@ const TransactionsListContainer = (props) => {
 	    	classes={{ root: classes.button }}
 	    	component={Link}
 	    	to={'/transactions/add'}>Add</Button>
+
+	      {removingError &&
+	        <Alert bsStyle="danger" style={{ margin: "30px 0" }}>
+	          Removing error!
+	        </Alert>
+	      }
+
+	      {removingSuccess &&
+	        <Alert bsStyle="success" style={{ margin: "30px 0" }}>
+	          Done!
+	        </Alert>
+	      }
+
+	      {isLoading &&
+	        <Alert bsStyle="warning" style={{ margin: "30px 0" }}>
+	          Loading...
+	        </Alert>
+	      }
+
+	      {hasErrored &&
+	        <Alert bsStyle="danger" style={{ margin: "30px 0" }}>
+	          Loading error!
+	        </Alert>
+	      }
+
 	    	{transactions.length === 0
 	    		? <p style={{ margin: "30px 0" }}>Transactions list is empty</p>
 	    		: table

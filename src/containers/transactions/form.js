@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import moment from 'moment';
+import React from 'react';
 
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
-import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import { Alert } from 'react-bootstrap';
 
 const TransactionForm = ({ states, handleChange, data }) => {
+  const disabled = states.adding || states.editing;
+
   return(
     <form autoComplete="off" style={{ margin: '50px 70px 0 30px' }}>
 
@@ -21,9 +21,21 @@ const TransactionForm = ({ states, handleChange, data }) => {
         </Alert>
       }
 
+      {states.action === 'add' && states.addingError &&
+        <Alert bsStyle="danger">
+          Error!
+        </Alert>
+      }
+
       {states.action === 'edit' && states.editingSuccess &&
         <Alert bsStyle="success">
-          Good job22!
+          Done!
+        </Alert>
+      }
+
+      {states.action === 'edit' && states.editingError &&
+        <Alert bsStyle="danger">
+          Saving error!
         </Alert>
       }
 
@@ -76,6 +88,8 @@ const TransactionForm = ({ states, handleChange, data }) => {
       </FormControl>
       <Button
         variant="raised"
+        color="inherit"
+        disabled={disabled}
         onClick={() => {
           states.action === 'add'
             ? data.add(states)
