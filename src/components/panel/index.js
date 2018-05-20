@@ -44,7 +44,7 @@ const PanelComponent = (props) => {
               textFieldStyle={{ width: '85px' }}
               mode="landscape"
               value={data.date}
-              onChange={(event, date) => { console.log(date, props.data.changeDate(date)) }} />
+              onChange={(e, date) => { data.changeDate(date) }} />
 				  </MuiThemeProvider>
         </Toolbar>
       </AppBar>

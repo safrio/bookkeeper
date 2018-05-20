@@ -5,6 +5,7 @@ import configureStore from './store/configureStore';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Transactions from './containers/transactions/'
+import Categories from './containers/categories/'
 import Panel from './containers/panel/'
 
 import './index.css';
@@ -18,7 +19,9 @@ render(
         <Route path='/' render={() => <Panel />} />
 	      <Switch>
 	        <Route exact path='/' component={Transactions} />
-	        <Route path='/transactions/:id' component={Transactions} />
+          <Route path='/transactions/:id' component={Transactions} />
+          <Route path='/categories/:id' component={Categories} />
+	        <Route path='/categories' component={Categories} />
 	      </Switch>
       </div>
     </Router>
