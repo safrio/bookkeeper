@@ -1,59 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom'
 
-import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import PanelComponent from '../../components/panel/';
+import { dateHasChanged } from '../../actions/panel';
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import DatePicker from 'material-ui/DatePicker';
-
-const styles = theme => ({
-  button: {
-    margin: "0 30px 0 0",
-  },
-  flex: {
-    flex: 1,
-  },
-});
-
-const PanelComponent = (props) => {
-  const { classes, data } = props;
-
-  return (
-    <div>
-      <AppBar position="static" color="default">
-        <Toolbar>
-          <Typography variant="title" color="inherit" className={classes.flex}>
-            The bookkeeper
-          </Typography>          
-          <Button color="inherit"
-          	classes={{ root: classes.button }}
-          	component={Link}
-          	to="/">Transactions</Button>
-          <Button color="inherit"
-          	classes={{ root: classes.button }}
-          	component={Link}
-          	to="/categories/">Categories</Button>
-				  <MuiThemeProvider>
-				    <DatePicker
-              hintText="Date"
-              textFieldStyle={{ width: '85px' }}
-              mode="landscape"
-              value={data.date}
-              onChange={(event, date) => { console.log(date, props.data.changeDate(date)) }} />
-				  </MuiThemeProvider>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+class Panel extends Component {
+  render() {
+    return (
+      <PanelComponent data={this.props} />
+    );
+  }
 }
 
-PanelComponent.propTypes = {
-  classes: PropTypes.object.isRequired,
+Panel.propTypes = {
+  changeDate: PropTypes.func.isRequired,
+  date: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PanelComponent);
+const mapStateToProps = (state) => ({
+  date: state.transactions.date,
+})
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeDate: (date) => dispatch(dateHasChanged(date)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Panel);

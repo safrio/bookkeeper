@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import TransactionForm from '../../containers/transactions/form';
+import TransactionForm from '../../components/transactions/form';
 
 class TransactionsAdd extends Component {
   constructor(props, context){
