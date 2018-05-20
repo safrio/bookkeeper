@@ -122,36 +122,16 @@ export function transactionEditingErrored(bool) {
 export function transactionsFetchData(date) {
   return (dispatch) => {
     dispatch(transactionsIsLoading(true));
-    fetch(config.transactionsURL + "?date=" + moment(date).format('DD-MM-YYYY'))
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-
-        dispatch(transactionsIsLoading(false));
-
-        return response;
-      })
-      .then((response) => response.json())
-      .then((transactions) => dispatch(transactionsFetchDataSuccess(transactions)))
+    axios.get(config.transactionsURL + "?date=" + moment(date).format('DD-MM-YYYY'))
+      .then((transactions) => dispatch(transactionsFetchDataSuccess(transactions.data)))
       .catch(() => dispatch(transactionsHasErrored(true)));
   };
 }
 
 export function transactionFetchData(id) {
   return (dispatch) => {
-    // dispatch(transactionIsLoading(true));
+    dispatch(transactionIsLoading(true));
     axios.get(config.transactionsURL + '/' + id)
-      // .then((response) => {
-      //   if (!response.ok) {
-      //     throw Error(response.statusText);
-      //   }
-
-      //   dispatch(transactionIsLoading(false));
-
-      //   return response;
-      // })
-      // .then((response) => response.json())
       .then((transaction) => dispatch(transactionFetchDataSuccess(transaction.data)))
       .catch(() => dispatch(transactionsHasErrored(true)));
   };
@@ -160,17 +140,7 @@ export function transactionFetchData(id) {
 export function transactionsRemove(id) {
   return (dispatch) => {
     dispatch(transactionIsRemoving(true));
-    fetch(config.transactionsURL + '/' + id, { method: 'delete' })
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-
-        dispatch(transactionIsRemoving(false));
-
-        return response;
-      })
-      .then((response) => response.json())
+    axios.delete(config.transactionsURL + '/' + id)
       .then((response) => dispatch(transactionRemoveSuccess(id)))
       .catch(() => dispatch(transactionRemoveErrored(true)));
   };
@@ -179,26 +149,15 @@ export function transactionsRemove(id) {
 export function transactionsAdd(data) {
   return (dispatch) => {
     dispatch(transactionIsAdding(true));
-    fetch(config.transactionsURL, {
-    	method: 'post',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
+    axios.post(config.transactionsURL, 
+      JSON.stringify({
         "category_id": data.category,
         "direction": data.direction,
         "published_at": moment(data.date).format("DD-MM-YYYY") + ' ' + data.time,
         "sum": data.amount,
-      })
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-
-        dispatch(transactionIsAdding(false));
-
-        return response;
-      })
-      .then((response) => response.json())
+      }),
+      { headers: { 'Content-Type': 'application/json' } }
+    )
       .then((response) => dispatch(transactionAddingSuccess(true)))
       .catch(() => dispatch(transactionAddingErrored(true)));
   };
